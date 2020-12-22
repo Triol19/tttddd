@@ -1,0 +1,24 @@
+version: "2.4"
+
+
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: tttddd
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - "5432:5432"
+    command: [
+      "postgres",
+      "-c", "log_statement=all",
+      "-c", "fsync=off",
+      "-c", "synchronous_commit=off",
+      "-c", "full_page_writes=off"
+    ]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tttddd"]
+      interval: 6s
+      timeout: 3s
+      retries: 10
